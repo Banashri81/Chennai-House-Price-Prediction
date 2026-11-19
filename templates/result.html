@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>House Price Prediction Result</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #1e293b;
+        }
+
+        header {
+            background: #142d4e;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            font-size: 21px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 22px;
+            font-size: 14px;
+        }
+
+        nav a:hover {
+            color: #93c5fd;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .heading h1 {
+            color: #142d4e;
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .heading p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .price-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            text-align: center;
+            padding: 30px 15px;
+            margin-bottom: 35px;
+        }
+
+        .price-label {
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            color: #16834a;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .section-title {
+            color: #142d4e;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .detail-value {
+            color: #1e293b;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .button {
+            flex: 1;
+            text-align: center;
+            padding: 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: #2563a6;
+            color: white;
+        }
+
+        .primary:hover {
+            background: #142d4e;
+        }
+
+        .secondary {
+            background: #e2e8f0;
+            color: #142d4e;
+        }
+
+        .secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .disclaimer {
+            text-align: center;
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 22px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-card {
+                padding: 22px;
+            }
+
+            .price {
+                font-size: 28px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>Chennai Property Predictor</h2>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/history">Prediction History</a>
+        </nav>
+    </header>
+
+    <div class="container">
+
+        <div class="result-card">
+
+            <div class="heading">
+                <h1>Prediction Completed</h1>
+                <p>Your property's estimated value is ready.</p>
+            </div>
+
+            <div class="price-box">
+
+                <p class="price-label">
+                    Estimated House Price
+                </p>
+
+                <div class="price">
+                    ₹{{ "{:,.2f}".format(predicted_price) }}
+                </div>
+
+            </div>
+
+            <h2 class="section-title">Property Summary</h2>
+
+            <div class="details-grid">
+
+                <div class="detail-item">
+                    <p class="detail-label">Locality</p>
+                    <p class="detail-value">{{ house.AREA }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Property Area</p>
+                    <p class="detail-value">{{ house.INT_SQFT }} sq.ft</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Distance from Main Road</p>
+                    <p class="detail-value">{{ house.DIST_MAINROAD }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Bedrooms</p>
+                    <p class="detail-value">{{ house.N_BEDROOM }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Bathrooms</p>
+                    <p class="detail-value">{{ house.N_BATHROOM }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Parking Facility</p>
+                    <p class="detail-value">{{ house.PARK_FACIL }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Building Type</p>
+                    <p class="detail-value">{{ house.BUILDTYPE }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Utility Availability</p>
+                    <p class="detail-value">{{ house.UTILITY_AVAIL }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Street Type</p>
+                    <p class="detail-value">{{ house.STREET }}</p>
+                </div>
+
+                <div class="detail-item">
+                    <p class="detail-label">Building Age</p>
+                    <p class="detail-value">{{ house.BUILDING_AGE }} years</p>
+                </div>
+
+            </div>
+
+            <div class="buttons">
+
+                <a href="/" class="button primary">
+                    Predict Another House
+                </a>
+
+                <a href="/history" class="button secondary">
+                    View Prediction History
+                </a>
+
+            </div>
+
+            <p class="disclaimer">
+                This price is an ML model estimate based on the supplied property details.
+                It is not a verified market valuation.
+            </p>
+
+        </div>
+
+    </div>
+
+    <footer>
+        Chennai House Price Prediction System | Machine Learning Project
+    </footer>
+
+</body>
+</html>

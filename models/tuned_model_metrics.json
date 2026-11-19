@@ -1,0 +1,18 @@
+{
+    "model": "Tuned Random Forest",
+    "best_parameters": {
+        "model__n_estimators": 200,
+        "model__min_samples_split": 2,
+        "model__min_samples_leaf": 6,
+        "model__max_features": 0.7,
+        "model__max_depth": null
+    },
+    "cross_validation_rmse": 886946.7176474258,
+    "train_r2": 0.9674873821819505,
+    "test_r2": 0.9430821438695758,
+    "mae": 703431.6779691709,
+    "mse": 747752821333.1118,
+    "rmse": 864727.0212807691,
+    "mape_percentage": 7.7148779094923805,
+    "train_test_r2_gap": 0.024405238312374733
+}
